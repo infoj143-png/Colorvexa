@@ -305,20 +305,117 @@ export function getColorFormats(r: number, g: number, b: number): ColorFormats {
 }
 
 /**
- * Calculates text color (black or white) for optimal contrast against a background color.
+ * Calculates relative luminance of an RGB color according to WCAG 2.1 specs.
  */
-export function getContrastColor(r: number, g: number, b: number): "#000000" | "#ffffff" {
-  // Using WCAG relative luminance formula
-  const toLuminanceComponent = (c: number) => {
-    const s = c / 255;
+export function calculateLuminance(r: number, g: number, b: number): number {
+  const toLinear = (c: number) => {
+    const s = Math.max(0, Math.min(255, c)) / 255;
     return s <= 0.03928 ? s / 12.92 : Math.pow((s + 0.055) / 1.055, 2.4);
   };
 
-  const luminance =
-    0.2126 * toLuminanceComponent(r) +
-    0.7152 * toLuminanceComponent(g) +
-    0.0722 * toLuminanceComponent(b);
+  return (
+    0.2126 * toLinear(r) +
+    0.7152 * toLinear(g) +
+    0.0722 * toLinear(b)
+  );
+}
 
+/**
+ * Calculates the WCAG contrast ratio between two RGB colors (1:1 to 21:1).
+ */
+export function calculateContrastRatio(
+  rgb1: { r: number; g: number; b: number },
+  rgb2: { r: number; g: number; b: number }
+): number {
+  const l1 = calculateLuminance(rgb1.r, rgb1.g, rgb1.b);
+  const l2 = calculateLuminance(rgb2.r, rgb2.g, rgb2.b);
+
+  const lighter = Math.max(l1, l2);
+  const darker = Math.min(l1, l2);
+
+  const ratio = (lighter + 0.05) / (darker + 0.05);
+  return Number(ratio.toFixed(2));
+}
+
+export interface WcagResults {
+  ratio: number;
+  normalAA: boolean;
+  normalAAA: boolean;
+  largeAA: boolean;
+  largeAAA: boolean;
+  uiComponent: boolean;
+}
+
+/**
+ * Evaluates WCAG 2.1 compliance for a given contrast ratio.
+ */
+export function evaluateWcag(ratio: number): WcagResults {
+  return {
+    ratio,
+    normalAA: ratio >= 4.5,
+    normalAAA: ratio >= 7.0,
+    largeAA: ratio >= 3.0,
+    largeAAA: ratio >= 4.5,
+    uiComponent: ratio >= 3.0,
+  };
+}
+
+export interface ColorVariation extends ColorFormats {
+  percentage: number;
+  label: string;
+}
+
+/**
+ * Generates progressive tints (mixed towards white) and shades (mixed towards black)
+ * for a base color with a given number of steps (e.g. 5, 7, 9, 11).
+ */
+export function generateShadesAndTints(
+  r: number,
+  g: number,
+  b: number,
+  stepsCount: number = 9
+): { base: ColorFormats; tints: ColorVariation[]; shades: ColorVariation[] } {
+  const base = getColorFormats(r, g, b);
+  const tints: ColorVariation[] = [];
+  const shades: ColorVariation[] = [];
+
+  for (let i = 1; i <= stepsCount; i++) {
+    const percentage = Math.round((i / (stepsCount + 1)) * 100);
+    const factor = percentage / 100;
+
+    // Tint: mix base towards white (255, 255, 255)
+    // Percentage indicates amount of white added (e.g. 10% white tint)
+    const tintR = Math.round(r + (255 - r) * factor);
+    const tintG = Math.round(g + (255 - g) * factor);
+    const tintB = Math.round(b + (255 - b) * factor);
+
+    tints.push({
+      ...getColorFormats(tintR, tintG, tintB),
+      percentage,
+      label: `${percentage}% Tint`,
+    });
+
+    // Shade: mix base towards black (0, 0, 0)
+    // Percentage indicates amount of black added (e.g. 10% black shade)
+    const shadeR = Math.round(r * (1 - factor));
+    const shadeG = Math.round(g * (1 - factor));
+    const shadeB = Math.round(b * (1 - factor));
+
+    shades.push({
+      ...getColorFormats(shadeR, shadeG, shadeB),
+      percentage,
+      label: `${percentage}% Shade`,
+    });
+  }
+
+  return { base, tints, shades };
+}
+
+/**
+ * Calculates text color (black or white) for optimal contrast against a background color.
+ */
+export function getContrastColor(r: number, g: number, b: number): "#000000" | "#ffffff" {
+  const luminance = calculateLuminance(r, g, b);
   return luminance > 0.179 ? "#000000" : "#ffffff";
 }
 
