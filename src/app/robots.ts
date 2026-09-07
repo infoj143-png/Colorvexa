@@ -1,4 +1,5 @@
 import { MetadataRoute } from "next";
+import { getAbsoluteUrl } from "@/lib/site-config";
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -6,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: "https://colorvexa.com/sitemap.xml",
+    sitemap: getAbsoluteUrl("/sitemap.xml"),
   };
 }

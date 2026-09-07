@@ -2,12 +2,22 @@ import type { Metadata } from "next";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { getAbsoluteUrl, SITE_NAME } from "@/lib/site-config";
 import { Mail, MessageSquare } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Contact Colorvexa — Get in Touch",
+  title: `Contact ${SITE_NAME} — Get in Touch`,
   description:
     "Have questions, suggestions, or feedback about Colorvexa? Get in touch with our team.",
+  alternates: {
+    canonical: getAbsoluteUrl("/contact"),
+  },
+  openGraph: {
+    title: `Contact ${SITE_NAME} — Get in Touch`,
+    description:
+      "Have questions, suggestions, or feedback about Colorvexa? Get in touch with our team.",
+    url: getAbsoluteUrl("/contact"),
+  },
 };
 
 export default function ContactPage() {

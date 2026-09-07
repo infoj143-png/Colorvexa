@@ -2,11 +2,21 @@ import type { Metadata } from "next";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { getAbsoluteUrl, SITE_NAME } from "@/lib/site-config";
 
 export const metadata: Metadata = {
-  title: "Disclaimer — Colorvexa",
+  title: `Disclaimer — ${SITE_NAME}`,
   description:
     "Disclaimer regarding color conversion accuracy, monitor calibration, and browser processing on Colorvexa.",
+  alternates: {
+    canonical: getAbsoluteUrl("/disclaimer"),
+  },
+  openGraph: {
+    title: `Disclaimer — ${SITE_NAME}`,
+    description:
+      "Disclaimer regarding color conversion accuracy, monitor calibration, and browser processing on Colorvexa.",
+    url: getAbsoluteUrl("/disclaimer"),
+  },
 };
 
 export default function DisclaimerPage() {

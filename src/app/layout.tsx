@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { SITE_NAME, SITE_URL, SITE_DESCRIPTION } from "@/lib/site-config";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -19,13 +20,12 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://colorvexa.com"),
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: "Colorvexa — Free Online Image Color & Palette Utility Tools",
-    template: "%s | Colorvexa",
+    default: `${SITE_NAME} — Free Online Image Color & Palette Utility Tools`,
+    template: `%s | ${SITE_NAME}`,
   },
-  description:
-    "Extract colors from images, generate beautiful palettes, convert color formats (HEX, RGB, HSL), and check color contrast directly in your browser.",
+  description: SITE_DESCRIPTION,
   keywords: [
     "color extractor",
     "image color picker",
@@ -38,25 +38,27 @@ export const metadata: Metadata = {
     "WCAG accessibility",
     "design utilities",
   ],
-  authors: [{ name: "Colorvexa" }],
-  creator: "Colorvexa",
-  publisher: "Colorvexa",
+  authors: [{ name: SITE_NAME }],
+  creator: SITE_NAME,
+  publisher: SITE_NAME,
   robots: {
     index: true,
     follow: true,
   },
+  alternates: {
+    canonical: "./",
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://colorvexa.com",
-    siteName: "Colorvexa",
-    title: "Colorvexa — Free Online Image Color & Palette Utility Tools",
-    description:
-      "Free client-side color utility platform. Extract colors, build palettes, convert codes, and check WCAG color contrast instantly in your browser.",
+    url: SITE_URL,
+    siteName: SITE_NAME,
+    title: `${SITE_NAME} — Free Online Image Color & Palette Utility Tools`,
+    description: SITE_DESCRIPTION,
   },
   twitter: {
     card: "summary_large_image",
-    title: "Colorvexa — Free Online Image Color & Palette Utility Tools",
+    title: `${SITE_NAME} — Free Online Image Color & Palette Utility Tools`,
     description:
       "Free client-side color utility platform for designers, developers, and creators.",
   },
