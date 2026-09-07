@@ -1,12 +1,37 @@
 import { ExtractedColor, getContrastColor } from "./colorUtils";
 
 /**
- * Generates and downloads a PNG palette image containing dominant colors and their values.
+ * Formats a list of colors as a line-separated list of HEX codes.
+ */
+export function formatPaletteAsHex(colors: ExtractedColor[]): string {
+  return colors.map((c) => c.hex.toUpperCase()).join("\n");
+}
+
+/**
+ * Formats a list of colors as CSS custom properties (:root).
+ */
+export function formatPaletteAsCss(colors: ExtractedColor[]): string {
+  const vars = colors
+    .map((c, i) => `  --color-${i + 1}: ${c.hex.toUpperCase()};`)
+    .join("\n");
+  return `:root {\n${vars}\n}`;
+}
+
+/**
+ * Formats a list of colors as a JSON array of HEX strings.
+ */
+export function formatPaletteAsJson(colors: ExtractedColor[]): string {
+  return JSON.stringify(colors.map((c) => c.hex.toUpperCase()), null, 2);
+}
+
+/**
+ * Generates and downloads a PNG palette image containing colors and their values.
  * Executed 100% locally in the browser using HTML5 Canvas API.
  */
 export function exportPaletteAsPng(
   colors: ExtractedColor[],
-  filename = "dominant-color-palette.png"
+  filename = "image-color-palette.png",
+  title = "Colorvexa — Image Color Palette"
 ): void {
   if (!colors || colors.length === 0) return;
 
@@ -30,11 +55,11 @@ export function exportPaletteAsPng(
   // Header Title
   ctx.fillStyle = "#FFFFFF";
   ctx.font = "bold 32px system-ui, -apple-system, sans-serif";
-  ctx.fillText("Colorvexa — Dominant Color Palette", 40, 58);
+  ctx.fillText(title, 40, 58);
 
   ctx.fillStyle = "#94A3B8"; // Slate 400
   ctx.font = "18px system-ui, -apple-system, sans-serif";
-  ctx.fillText(`${colors.length} Extracted Dominant Colors`, 40, 92);
+  ctx.fillText(`${colors.length} Extracted Image Palette Colors`, 40, 92);
 
   // Swatches Side by Side
   const count = colors.length;

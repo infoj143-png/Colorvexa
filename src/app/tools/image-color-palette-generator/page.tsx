@@ -1,17 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ToolPageLayout } from "@/components/ToolPageLayout";
-import { ImageUploader } from "@/components/ImageUploader";
-import { EmptyState } from "@/components/EmptyState";
+import { ImageColorPaletteGenerator } from "@/components/ImageColorPaletteGenerator";
 import { FAQ } from "@/components/FAQ";
 import { ToolCard } from "@/components/ToolCard";
 import { ToolGrid } from "@/components/ToolGrid";
 import { getAbsoluteUrl, SITE_NAME } from "@/lib/site-config";
 import {
   Palette,
-  Download,
-  ShieldCheck,
-  Sparkles,
   Pipette,
   Layers,
   RefreshCw,
@@ -20,44 +16,74 @@ import {
 } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Image Color Palette Generator — Generate Palettes From Photos | Colorvexa",
+  title: "Image Color Palette Generator – Extract a Palette From Any Image | Colorvexa",
   description:
-    "Automatically generate beautiful color palettes from any photo or graphic. Export color palettes in HEX, RGB, and CSS formats directly in your web browser.",
+    "Automatically generate beautiful color palettes from any photo or graphic. Extract representative HEX, RGB, and HSL colors and export as CSS or PNG directly in your browser.",
   alternates: {
     canonical: getAbsoluteUrl("/tools/image-color-palette-generator"),
   },
   openGraph: {
-    title: "Image Color Palette Generator — Generate Palettes From Photos | Colorvexa",
+    title: "Image Color Palette Generator – Extract a Palette From Any Image | Colorvexa",
     description:
-      "Automatically generate harmonious color palettes from uploaded images. Free, instant, and private browser processing.",
+      "Automatically generate harmonious color palettes from uploaded images. Free, instant, and private client-side browser processing.",
     url: getAbsoluteUrl("/tools/image-color-palette-generator"),
     siteName: SITE_NAME,
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Image Color Palette Generator — Generate Palettes From Photos | Colorvexa",
+    title: "Image Color Palette Generator – Extract a Palette From Any Image | Colorvexa",
     description:
-      "Generate beautiful color schemes and palettes from any photo instantly in your browser.",
+      "Generate beautiful color schemes and palettes from any photo instantly in your browser without uploading files.",
   },
 };
 
 export default function ImageColorPaletteGeneratorPage() {
   const faqs = [
     {
-      question: "How are palettes generated from an image?",
+      question: "How do I create a color palette from an image?",
       answer:
-        "Colorvexa calculates spatial and perceptual color variations across the image pixels to form a harmonious 5 to 10 color design palette.",
+        "Upload any photo (JPG, PNG, WebP) to Colorvexa. Our client-side algorithm instantly analyzes pixel frequency and spatial color clusters to generate a cohesive color palette.",
     },
     {
-      question: "Can I export my generated palette?",
+      question: "How many colors can I generate?",
       answer:
-        "Yes, generated palettes can be exported directly as CSS variables, JSON, or image swatch files.",
+        "You can choose between 3, 4, 5, 6, 8, or 10 representative colors. The default palette size is 5 colors, and changing the size instantly regenerates the palette.",
     },
     {
-      question: "Is my image uploaded or stored?",
+      question: "Can I extract HEX codes from an image?",
       answer:
-        "No. Palette generation happens entirely inside your browser memory using client-side JavaScript. Your image is never transmitted over the internet.",
+        "Yes! Each swatch displays its exact HEX code, which you can copy individually or copy all HEX codes simultaneously with the 'Copy Palette' button.",
+    },
+    {
+      question: "Can I get RGB and HSL values?",
+      answer:
+        "Yes, every extracted palette color includes ready-to-copy HEX, RGB, and HSL values alongside approximate prominence percentages.",
+    },
+    {
+      question: "Can I download the generated palette?",
+      answer:
+        "Yes, you can copy the palette as plain HEX, CSS variables (`:root`), JSON, or download a high-resolution PNG swatch image.",
+    },
+    {
+      question: "Is my image uploaded?",
+      answer:
+        "No. All image processing occurs entirely within your web browser using HTML5 Canvas API. Your images never leave your device and are never uploaded or stored on any server.",
+    },
+    {
+      question: "Does it work on mobile?",
+      answer:
+        "Yes, Colorvexa is fully responsive and optimized for mobile touchscreens, tablets, and desktop computers.",
+    },
+    {
+      question: "What image formats are supported?",
+      answer:
+        "Colorvexa supports JPG/JPEG, PNG, and WebP image formats.",
+    },
+    {
+      question: "What is the difference between a dominant color extractor and a palette generator?",
+      answer:
+        "A dominant color extractor focuses primarily on calculating strict statistical color area percentages, while a palette generator groups similar colors into visual, harmonious design swatches ideal for UI design and artwork.",
     },
   ];
 
@@ -99,7 +125,7 @@ export default function ImageColorPaletteGeneratorPage() {
       priceCurrency: "USD",
     },
     description:
-      "Free online image color palette generator tool. Auto-create cohesive palettes from photos directly in your web browser.",
+      "Free online image color palette generator tool. Auto-create cohesive color palettes from photos directly in your web browser with client-side privacy.",
   };
 
   const faqSchema = {
@@ -134,7 +160,7 @@ export default function ImageColorPaletteGeneratorPage() {
       {
         "@type": "ListItem",
         position: 3,
-        name: "Image Palette Generator",
+        name: "Image Color Palette Generator",
         item: getAbsoluteUrl("/tools/image-color-palette-generator"),
       },
     ],
@@ -157,39 +183,109 @@ export default function ImageColorPaletteGeneratorPage() {
 
       <ToolPageLayout
         title="Image Color Palette Generator"
-        description="Automatically generate a balanced, beautiful color palette from any uploaded image."
+        description="Extract beautiful, representative color palettes directly from any photo or image instantly in your web browser."
         icon={<Palette className="w-8 h-8 text-rose-600" />}
         breadcrumbs={[
           { label: "Tools", href: "/#tools" },
-          { label: "Image Palette Generator" },
+          { label: "Image Color Palette Generator" },
         ]}
       >
         <div className="space-y-12">
-          <div className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-10 shadow-xs space-y-8">
-            <div className="max-w-3xl mx-auto">
-              <ImageUploader />
-            </div>
-
-            <EmptyState
-              title="Upload an image to generate a color palette"
-              description="Your image will be analyzed locally to produce a cohesive, downloadable color scheme."
-            />
-
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-6 border-t border-slate-100 text-xs text-slate-600 font-medium">
-              <div className="flex items-center gap-2 p-3 bg-slate-50 rounded-xl">
-                <Sparkles className="w-4 h-4 text-rose-500 shrink-0" />
-                <span>Harmonious color distribution</span>
-              </div>
-              <div className="flex items-center gap-2 p-3 bg-slate-50 rounded-xl">
-                <Download className="w-4 h-4 text-sky-500 shrink-0" />
-                <span>Multi-format palette export</span>
-              </div>
-              <div className="flex items-center gap-2 p-3 bg-slate-50 rounded-xl">
-                <ShieldCheck className="w-4 h-4 text-emerald-500 shrink-0" />
-                <span>Private client-side processing</span>
-              </div>
-            </div>
+          {/* Main Interactive Tool Component */}
+          <div className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-10 shadow-xs">
+            <ImageColorPaletteGenerator />
           </div>
+
+          {/* GEO Educational Content Section */}
+          <section className="bg-white rounded-3xl border border-slate-200 p-8 sm:p-10 shadow-xs space-y-8">
+            <div className="border-b border-slate-200 pb-4">
+              <h2 className="text-2xl font-bold text-slate-900 tracking-tight">
+                About the Image Color Palette Generator
+              </h2>
+              <p className="text-slate-600 text-sm mt-1">
+                Learn how client-side color extraction helps designers turn photos into cohesive color schemes.
+              </p>
+            </div>
+
+            <div className="space-y-6 text-slate-700 text-sm leading-relaxed">
+              <div className="space-y-2">
+                <h3 className="text-lg font-bold text-slate-900">
+                  What is an Image Color Palette Generator?
+                </h3>
+                <p>
+                  An <strong>Image Color Palette Generator</strong> is a specialized design utility that extracts
+                  a structured collection of representative colors from an uploaded photo or graphic. Designers, branding
+                  specialists, and digital artists use palette generators to turn photography, digital artwork, and mood boards
+                  into practical color schemes for website themes, mobile apps, and graphic illustrations.
+                </p>
+              </div>
+
+              <div className="space-y-2">
+                <h3 className="text-lg font-bold text-slate-900">
+                  How to Generate a Color Palette From an Image
+                </h3>
+                <ol className="list-decimal list-inside space-y-2 pl-2">
+                  <li>
+                    <strong>Upload an image:</strong> Drag and drop or select a JPG, PNG, or WebP photo.
+                  </li>
+                  <li>
+                    <strong>Colorvexa analyzes the image locally:</strong> HTML5 Canvas reads pixel data directly inside your browser.
+                  </li>
+                  <li>
+                    <strong>Representative colors are identified:</strong> Similar colors are grouped using median cut quantization.
+                  </li>
+                  <li>
+                    <strong>A color palette is generated:</strong> Swatches display exact HEX, RGB, and HSL values with approximate proportions.
+                  </li>
+                  <li>
+                    <strong>Copy or export the colors:</strong> Instantly copy HEX lists, CSS variables, JSON arrays, or download a PNG swatch.
+                  </li>
+                </ol>
+              </div>
+
+              <div className="space-y-2">
+                <h3 className="text-lg font-bold text-slate-900">
+                  How Does the Palette Generator Work?
+                </h3>
+                <p>
+                  When an image is loaded, Colorvexa samples pixel color values across an offscreen canvas. To maintain high performance
+                  on large photo files, the image is efficiently downsampled. The algorithm groups pixel colors into balanced clusters using
+                  color quantization (Median Cut algorithm), ignoring transparent pixels. Representative average values from each cluster form
+                  a harmonious design palette reflecting the visual essence of your photo.
+                </p>
+              </div>
+
+              <div className="space-y-2">
+                <h3 className="text-lg font-bold text-slate-900">
+                  What Color Formats Are Available?
+                </h3>
+                <p>
+                  Every generated palette color includes three essential web design formats:
+                </p>
+                <ul className="list-disc list-inside space-y-1 pl-2">
+                  <li>
+                    <strong>HEX (Hexadecimal):</strong> standard six-digit codes widely used in CSS and web design (e.g., <code>#F5F1E8</code>).
+                  </li>
+                  <li>
+                    <strong>RGB (Red, Green, Blue):</strong> standard color values for screen displays (e.g., <code>rgb(245, 241, 232)</code>).
+                  </li>
+                  <li>
+                    <strong>HSL (Hue, Saturation, Lightness):</strong> intuitive representation for color manipulation (e.g., <code>hsl(42, 43%, 94%)</code>).
+                  </li>
+                </ul>
+              </div>
+
+              <div className="space-y-2">
+                <h3 className="text-lg font-bold text-slate-900">
+                  Is My Image Uploaded?
+                </h3>
+                <p>
+                  No. Colorvexa prioritizes user privacy and security. Image analysis and palette generation occur entirely in your browser using
+                  client-side JavaScript. Your images are never transmitted to external servers, cloud services, or third-party APIs.
+                </p>
+              </div>
+            </div>
+          </section>
 
           {/* INTERNAL LINKING SECTION */}
           <section className="bg-white rounded-3xl border border-slate-200 p-8 sm:p-10 shadow-xs space-y-4">
@@ -197,7 +293,7 @@ export default function ImageColorPaletteGeneratorPage() {
               Related Design & Color Utilities
             </h2>
             <p className="text-slate-600 text-sm leading-relaxed">
-              Explore more free browser utilities on Colorvexa:
+              Explore more free, fast browser utilities on Colorvexa:
             </p>
             <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 text-xs sm:text-sm font-medium text-slate-700">
               <li>
@@ -215,7 +311,7 @@ export default function ImageColorPaletteGeneratorPage() {
                   className="p-3 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-xl flex items-center gap-2 text-sky-700 hover:text-sky-800 transition-colors"
                 >
                   <Layers className="w-4 h-4 shrink-0 text-indigo-600" />
-                  <span>Extract Dominant Colors</span>
+                  <span>Dominant Color Extractor</span>
                 </Link>
               </li>
               <li>
@@ -233,7 +329,7 @@ export default function ImageColorPaletteGeneratorPage() {
                   className="p-3 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-xl flex items-center gap-2 text-sky-700 hover:text-sky-800 transition-colors"
                 >
                   <SlidersHorizontal className="w-4 h-4 shrink-0 text-emerald-600" />
-                  <span>Shades & Tints Generator</span>
+                  <span>Color Shades Generator</span>
                 </Link>
               </li>
               <li>
@@ -248,7 +344,8 @@ export default function ImageColorPaletteGeneratorPage() {
             </ul>
           </section>
 
-          <FAQ items={faqs} title="Palette Generator FAQ" />
+          {/* FAQ SECTION */}
+          <FAQ items={faqs} title="Frequently Asked Questions" />
 
           {/* RELATED COLOR TOOLS SECTION */}
           <section className="space-y-6">
