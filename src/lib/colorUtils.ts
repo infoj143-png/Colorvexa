@@ -10,20 +10,221 @@ export interface ColorFormats {
   l: number;
 }
 
+export interface ExtendedColorFormats extends ColorFormats {
+  a: number; // Alpha transparency (0.0 to 1.0)
+}
+
 export interface ExtractedColor extends ColorFormats {
   count: number;
   percentage: number;
 }
 
 /**
- * Converts RGB color values (0-255) to a HEX string (#RRGGBB).
+ * Converts RGB(A) color values to a HEX / HEXA string.
  */
-export function rgbToHex(r: number, g: number, b: number): string {
+export function rgbToHex(r: number, g: number, b: number, a: number = 1): string {
   const toHex = (n: number) => {
     const clamped = Math.max(0, Math.min(255, Math.round(n)));
-    return clamped.toString(16).padStart(2, "0");
+    return clamped.toString(16).padStart(2, "0").toUpperCase();
   };
-  return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+  const hexRGB = `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+  if (a < 1) {
+    const alphaHex = toHex(Math.round(a * 255));
+    return `${hexRGB}${alphaHex}`;
+  }
+  return hexRGB;
+}
+
+/**
+ * Parses any HEX string (#RGB, #RGBA, #RRGGBB, #RRGGBBAA) into RGBA components (0-255 for RGB, 0-1 for Alpha).
+ */
+export function hexToRgba(hexStr: string): { r: number; g: number; b: number; a: number } | null {
+  if (!hexStr) return null;
+  let cleanHex = hexStr.trim();
+  if (cleanHex.startsWith("#")) {
+    cleanHex = cleanHex.slice(1);
+  }
+
+  // Validate hex characters
+  if (!/^[0-9a-fA-F]+$/.test(cleanHex)) {
+    return null;
+  }
+
+  let r = 0, g = 0, b = 0, a = 1;
+
+  if (cleanHex.length === 3) {
+    r = parseInt(cleanHex[0] + cleanHex[0], 16);
+    g = parseInt(cleanHex[1] + cleanHex[1], 16);
+    b = parseInt(cleanHex[2] + cleanHex[2], 16);
+  } else if (cleanHex.length === 4) {
+    r = parseInt(cleanHex[0] + cleanHex[0], 16);
+    g = parseInt(cleanHex[1] + cleanHex[1], 16);
+    b = parseInt(cleanHex[2] + cleanHex[2], 16);
+    a = Number((parseInt(cleanHex[3] + cleanHex[3], 16) / 255).toFixed(2));
+  } else if (cleanHex.length === 6) {
+    r = parseInt(cleanHex.slice(0, 2), 16);
+    g = parseInt(cleanHex.slice(2, 4), 16);
+    b = parseInt(cleanHex.slice(4, 6), 16);
+  } else if (cleanHex.length === 8) {
+    r = parseInt(cleanHex.slice(0, 2), 16);
+    g = parseInt(cleanHex.slice(2, 4), 16);
+    b = parseInt(cleanHex.slice(4, 6), 16);
+    a = Number((parseInt(cleanHex.slice(6, 8), 16) / 255).toFixed(2));
+  } else {
+    return null;
+  }
+
+  if (isNaN(r) || isNaN(g) || isNaN(b) || isNaN(a)) return null;
+
+  return { r, g, b, a };
+}
+
+/**
+ * Converts HSL components to RGB components (0-255).
+ */
+export function hslToRgb(h: number, s: number, l: number): { r: number; g: number; b: number } {
+  const normH = ((h % 360) + 360) % 360;
+  const normS = Math.max(0, Math.min(100, s)) / 100;
+  const normL = Math.max(0, Math.min(100, l)) / 100;
+
+  const c = (1 - Math.abs(2 * normL - 1)) * normS;
+  const x = c * (1 - Math.abs(((normH / 60) % 2) - 1));
+  const m = normL - c / 2;
+
+  let rPrime = 0, gPrime = 0, bPrime = 0;
+
+  if (normH < 60) {
+    rPrime = c; gPrime = x; bPrime = 0;
+  } else if (normH < 120) {
+    rPrime = x; gPrime = c; bPrime = 0;
+  } else if (normH < 180) {
+    rPrime = 0; gPrime = c; bPrime = x;
+  } else if (normH < 240) {
+    rPrime = 0; gPrime = x; bPrime = c;
+  } else if (normH < 300) {
+    rPrime = x; gPrime = 0; bPrime = c;
+  } else {
+    rPrime = c; gPrime = 0; bPrime = x;
+  }
+
+  return {
+    r: Math.round((rPrime + m) * 255),
+    g: Math.round((gPrime + m) * 255),
+    b: Math.round((bPrime + m) * 255),
+  };
+}
+
+/**
+ * Parses RGB / RGBA strings or comma/space-separated numbers into RGBA components.
+ */
+export function parseRgbString(str: string): { r: number; g: number; b: number; a: number } | null {
+  if (!str) return null;
+  const cleaned = str.trim();
+
+  // Match numbers (including decimals and percentage)
+  const matches = cleaned.match(/[-+]?\d*\.?\d+%?/g)?.filter((m) => m.length > 0);
+  if (!matches || (matches.length !== 3 && matches.length !== 4)) {
+    return null;
+  }
+
+  const r = parseFloat(matches[0]);
+  const g = parseFloat(matches[1]);
+  const b = parseFloat(matches[2]);
+  let a = 1;
+
+  if (matches.length === 4) {
+    const rawA = matches[3];
+    if (rawA.endsWith("%")) {
+      a = parseFloat(rawA) / 100;
+    } else {
+      a = parseFloat(rawA);
+    }
+  }
+
+  if (
+    isNaN(r) || r < 0 || r > 255 ||
+    isNaN(g) || g < 0 || g > 255 ||
+    isNaN(b) || b < 0 || b > 255 ||
+    isNaN(a) || a < 0 || a > 1
+  ) {
+    return null;
+  }
+
+  return {
+    r: Math.round(r),
+    g: Math.round(g),
+    b: Math.round(b),
+    a: Number(a.toFixed(2)),
+  };
+}
+
+/**
+ * Parses HSL / HSLA strings or comma/space-separated numbers into HSLA components.
+ */
+export function parseHslString(str: string): { h: number; s: number; l: number; a: number } | null {
+  if (!str) return null;
+  const cleaned = str.trim().replace(/°/g, "");
+
+  const matches = cleaned.match(/[-+]?\d*\.?\d+%?/g)?.filter((m) => m.length > 0);
+  if (!matches || (matches.length !== 3 && matches.length !== 4)) {
+    return null;
+  }
+
+  const h = parseFloat(matches[0]);
+  const s = parseFloat(matches[1]);
+  const l = parseFloat(matches[2]);
+  let a = 1;
+
+  if (matches.length === 4) {
+    const rawA = matches[3];
+    if (rawA.endsWith("%")) {
+      a = parseFloat(rawA) / 100;
+    } else {
+      a = parseFloat(rawA);
+    }
+  }
+
+  if (
+    isNaN(h) || h < 0 || h > 360 ||
+    isNaN(s) || s < 0 || s > 100 ||
+    isNaN(l) || l < 0 || l > 100 ||
+    isNaN(a) || a < 0 || a > 1
+  ) {
+    return null;
+  }
+
+  return {
+    h: Math.round(h),
+    s: Math.round(s),
+    l: Math.round(l),
+    a: Number(a.toFixed(2)),
+  };
+}
+
+/**
+ * Formats RGB / RGBA into a CSS string.
+ */
+export function formatRgba(r: number, g: number, b: number, a: number = 1): string {
+  const roundedR = Math.round(r);
+  const roundedG = Math.round(g);
+  const roundedB = Math.round(b);
+  if (a < 1) {
+    return `rgba(${roundedR}, ${roundedG}, ${roundedB}, ${Number(a.toFixed(2))})`;
+  }
+  return `rgb(${roundedR}, ${roundedG}, ${roundedB})`;
+}
+
+/**
+ * Formats HSL / HSLA into a CSS string.
+ */
+export function formatHsla(h: number, s: number, l: number, a: number = 1): string {
+  const roundedH = Math.round(h);
+  const roundedS = Math.round(s);
+  const roundedL = Math.round(l);
+  if (a < 1) {
+    return `hsla(${roundedH}, ${roundedS}%, ${roundedL}%, ${Number(a.toFixed(2))})`;
+  }
+  return `hsl(${roundedH}, ${roundedS}%, ${roundedL}%)`;
 }
 
 /**
