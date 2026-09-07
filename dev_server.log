@@ -1,0 +1,11 @@
+
+> colorvexa@0.1.0 dev
+> next dev
+
+▲ Next.js 16.3.4 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.0.2:3000
+✓ Ready in 520ms
+✓ Running next.config.ts took 42ms
+
+ GET /tools/image-color-picker 200 in 3.2s (next.js: 2.8s, application-code: 404ms)
