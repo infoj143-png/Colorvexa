@@ -5,7 +5,10 @@
 ▲ Next.js 16.3.4 (Turbopack)
 - Local:         http://localhost:3000
 - Network:       http://192.168.0.2:3000
-✓ Ready in 520ms
-✓ Running next.config.ts took 42ms
+✓ Ready in 557ms
+✓ Running next.config.ts took 47ms
 
- GET /tools/image-color-picker 200 in 3.2s (next.js: 2.8s, application-code: 404ms)
+ GET /tools/dominant-color-extractor 200 in 3.7s (next.js: 3.3s, application-code: 471ms)
+ GET /tools/dominant-color-extractor 200 in 350ms (next.js: 22ms, application-code: 328ms)
+ GET /tools/dominant-color-extractor 200 in 201ms (next.js: 5ms, application-code: 196ms)
+ GET /tools/dominant-color-extractor 200 in 219ms (next.js: 5ms, application-code: 215ms)
