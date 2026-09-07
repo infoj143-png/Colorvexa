@@ -2,11 +2,21 @@ import type { Metadata } from "next";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { getAbsoluteUrl, SITE_NAME } from "@/lib/site-config";
 
 export const metadata: Metadata = {
-  title: "Terms of Use — Colorvexa",
+  title: `Terms of Use — ${SITE_NAME}`,
   description:
     "Terms of Use for Colorvexa online color tools and design utilities.",
+  alternates: {
+    canonical: getAbsoluteUrl("/terms"),
+  },
+  openGraph: {
+    title: `Terms of Use — ${SITE_NAME}`,
+    description:
+      "Terms of Use for Colorvexa online color tools and design utilities.",
+    url: getAbsoluteUrl("/terms"),
+  },
 };
 
 export default function TermsPage() {

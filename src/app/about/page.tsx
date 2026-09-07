@@ -2,12 +2,22 @@ import type { Metadata } from "next";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { getAbsoluteUrl, SITE_NAME } from "@/lib/site-config";
 import { ShieldCheck, Globe, Cpu, Heart } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "About Colorvexa — Free Online Color & Palette Utilities",
+  title: `About ${SITE_NAME} — Free Online Color & Palette Utilities`,
   description:
     "Learn about Colorvexa: a free, privacy-first worldwide web platform for image color extraction, palette creation, and design utility tools.",
+  alternates: {
+    canonical: getAbsoluteUrl("/about"),
+  },
+  openGraph: {
+    title: `About ${SITE_NAME} — Free Online Color & Palette Utilities`,
+    description:
+      "Learn about Colorvexa: a free, privacy-first worldwide web platform for image color extraction, palette creation, and design utility tools.",
+    url: getAbsoluteUrl("/about"),
+  },
 };
 
 export default function AboutPage() {

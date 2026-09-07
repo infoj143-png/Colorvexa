@@ -2,11 +2,21 @@ import type { Metadata } from "next";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { getAbsoluteUrl, SITE_NAME } from "@/lib/site-config";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy — Colorvexa",
+  title: `Privacy Policy — ${SITE_NAME}`,
   description:
     "Colorvexa Privacy Policy. Learn about our commitment to browser-first client-side processing and user data privacy.",
+  alternates: {
+    canonical: getAbsoluteUrl("/privacy"),
+  },
+  openGraph: {
+    title: `Privacy Policy — ${SITE_NAME}`,
+    description:
+      "Colorvexa Privacy Policy. Learn about our commitment to browser-first client-side processing and user data privacy.",
+    url: getAbsoluteUrl("/privacy"),
+  },
 };
 
 export default function PrivacyPage() {

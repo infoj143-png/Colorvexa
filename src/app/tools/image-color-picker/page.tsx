@@ -5,6 +5,7 @@ import { ImageColorPicker } from "@/components/ImageColorPicker";
 import { FAQ } from "@/components/FAQ";
 import { ToolCard } from "@/components/ToolCard";
 import { ToolGrid } from "@/components/ToolGrid";
+import { getAbsoluteUrl, SITE_NAME } from "@/lib/site-config";
 import {
   Pipette,
   Layers,
@@ -20,14 +21,14 @@ export const metadata: Metadata = {
   description:
     "Free online image color picker. Upload any image to pick exact pixel colors in HEX, RGB, and HSL formats. Fast, precise, and 100% private client-side processing.",
   alternates: {
-    canonical: "https://colorvexa.com/tools/image-color-picker",
+    canonical: getAbsoluteUrl("/tools/image-color-picker"),
   },
   openGraph: {
     title: "Image Color Picker – Pick HEX, RGB & HSL Colors From Images | Colorvexa",
     description:
       "Upload an image and pick any pixel color instantly. Get accurate HEX, RGB, and HSL values in your browser with complete privacy.",
-    url: "https://colorvexa.com/tools/image-color-picker",
-    siteName: "Colorvexa",
+    url: getAbsoluteUrl("/tools/image-color-picker"),
+    siteName: SITE_NAME,
     type: "website",
   },
   twitter: {
@@ -115,7 +116,7 @@ export default function ImageColorPickerPage() {
     "@context": "https://schema.org",
     "@type": "WebApplication",
     name: "Image Color Picker",
-    url: "https://colorvexa.com/tools/image-color-picker",
+    url: getAbsoluteUrl("/tools/image-color-picker"),
     applicationCategory: "DesignApplication",
     operatingSystem: "All",
     browserRequirements: "Requires JavaScript and HTML5 Canvas support",
@@ -149,19 +150,19 @@ export default function ImageColorPickerPage() {
         "@type": "ListItem",
         position: 1,
         name: "Home",
-        item: "https://colorvexa.com",
+        item: getAbsoluteUrl("/"),
       },
       {
         "@type": "ListItem",
         position: 2,
         name: "Tools",
-        item: "https://colorvexa.com/#tools",
+        item: getAbsoluteUrl("/#tools"),
       },
       {
         "@type": "ListItem",
         position: 3,
         name: "Image Color Picker",
-        item: "https://colorvexa.com/tools/image-color-picker",
+        item: getAbsoluteUrl("/tools/image-color-picker"),
       },
     ],
   };

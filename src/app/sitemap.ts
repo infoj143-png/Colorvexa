@@ -1,28 +1,13 @@
 import { MetadataRoute } from "next";
+import { PUBLIC_ROUTES, getAbsoluteUrl } from "@/lib/site-config";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://colorvexa.com";
   const currentDate = new Date().toISOString();
 
-  const routes = [
-    "",
-    "/tools/image-color-picker",
-    "/tools/dominant-color-extractor",
-    "/tools/image-color-palette-generator",
-    "/tools/color-converter",
-    "/tools/color-shades-generator",
-    "/tools/color-contrast-checker",
-    "/about",
-    "/contact",
-    "/privacy",
-    "/terms",
-    "/disclaimer",
-  ];
-
-  return routes.map((route) => ({
-    url: `${baseUrl}${route}`,
+  return PUBLIC_ROUTES.map((route) => ({
+    url: getAbsoluteUrl(route.path),
     lastModified: currentDate,
-    changeFrequency: route === "" ? "daily" : "weekly",
-    priority: route === "" ? 1.0 : route.startsWith("/tools/") ? 0.8 : 0.5,
+    changeFrequency: route.changeFrequency,
+    priority: route.priority,
   }));
 }

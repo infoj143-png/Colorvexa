@@ -1,9 +1,11 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { ToolCard } from "@/components/ToolCard";
 import { ToolGrid } from "@/components/ToolGrid";
 import { FAQ } from "@/components/FAQ";
+import { getAbsoluteUrl, SITE_NAME, SITE_DESCRIPTION } from "@/lib/site-config";
 import {
   Pipette,
   Layers,
@@ -19,6 +21,27 @@ import {
   CheckCircle2,
   Eye,
 } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: `${SITE_NAME} — Free Online Image Color & Palette Utility Tools`,
+  description: SITE_DESCRIPTION,
+  alternates: {
+    canonical: getAbsoluteUrl("/"),
+  },
+  openGraph: {
+    title: `${SITE_NAME} — Free Online Image Color & Palette Utility Tools`,
+    description: SITE_DESCRIPTION,
+    url: getAbsoluteUrl("/"),
+    siteName: SITE_NAME,
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${SITE_NAME} — Free Online Image Color & Palette Utility Tools`,
+    description:
+      "Free client-side color utility platform for designers, developers, and creators.",
+  },
+};
 
 export default function HomePage() {
   const popularTools = [
