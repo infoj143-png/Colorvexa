@@ -5,8 +5,8 @@
 ▲ Next.js 16.3.4 (Turbopack)
 - Local:         http://localhost:3000
 - Network:       http://192.168.0.2:3000
-✓ Ready in 560ms
-✓ Running next.config.ts took 44ms
+✓ Ready in 538ms
+✓ Running next.config.ts took 45ms
 
-○ Compiling /tools/image-color-palette-generator ...
- GET /tools/image-color-palette-generator 200 in 4.6s (next.js: 4.0s, application-code: 665ms)
+○ Compiling /tools/color-converter ...
+ GET /tools/color-converter 200 in 4.6s (next.js: 3.9s, application-code: 706ms)
