@@ -1,63 +1,86 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ToolPageLayout } from "@/components/ToolPageLayout";
-import { ImageUploader } from "@/components/ImageUploader";
-import { EmptyState } from "@/components/EmptyState";
+import { DominantColorExtractor } from "@/components/DominantColorExtractor";
 import { FAQ } from "@/components/FAQ";
 import { ToolCard } from "@/components/ToolCard";
 import { ToolGrid } from "@/components/ToolGrid";
 import { getAbsoluteUrl, SITE_NAME } from "@/lib/site-config";
 import {
   Layers,
-  ShieldCheck,
-  Zap,
-  Sparkles,
   Pipette,
   Palette,
   RefreshCw,
   SlidersHorizontal,
   Eye,
+  Lock,
+  Sparkles,
 } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Dominant Color Extractor — Find Prominent Image Colors | Colorvexa",
+  title: "Dominant Color Extractor – Extract Colors From Images",
   description:
-    "Extract dominant colors from images online for free. Discover primary color distributions and color accents instantly in your browser with complete privacy.",
+    "Extract dominant colors from images online for free. Discover primary color distributions, color accents, and frequency ratios in your browser with 100% client-side privacy.",
   alternates: {
     canonical: getAbsoluteUrl("/tools/dominant-color-extractor"),
   },
   openGraph: {
-    title: "Dominant Color Extractor — Find Prominent Image Colors | Colorvexa",
+    title: "Dominant Color Extractor – Extract Colors From Images | Colorvexa",
     description:
-      "Extract primary, dominant, and accent colors from any uploaded photo or image using fast client-side algorithms.",
+      "Extract primary and dominant colors from any image instantly in your web browser. Get exact HEX, RGB, and HSL codes with complete privacy.",
     url: getAbsoluteUrl("/tools/dominant-color-extractor"),
     siteName: SITE_NAME,
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Dominant Color Extractor — Find Prominent Image Colors | Colorvexa",
+    title: "Dominant Color Extractor – Extract Colors From Images | Colorvexa",
     description:
-      "Extract primary and dominant colors from any image instantly in your web browser.",
+      "Extract primary and dominant colors from any photo instantly in your web browser.",
   },
 };
 
 export default function DominantColorExtractorPage() {
   const faqs = [
     {
-      question: "What is a dominant color extractor?",
+      question: "What is a dominant color?",
       answer:
-        "A dominant color extractor analyzes the frequency and distribution of colors in an image to identify the primary and secondary colors that define its visual palette.",
+        "A dominant color is the most visually prominent color in an image, occupying the largest proportion of total pixel space or driving the primary visual tone of the photo.",
     },
     {
-      question: "How fast is color extraction?",
+      question: "How do I extract colors from an image?",
       answer:
-        "Extraction takes less than a second because computation runs locally in your browser using optimized Canvas API color quantizing algorithms.",
+        "Upload or drag and drop your image (JPG, PNG, WebP) into Colorvexa. Our browser-based quantization algorithm automatically analyzes pixel frequencies and extracts the top dominant colors instantly.",
     },
     {
-      question: "Are my images stored or uploaded?",
+      question: "How many colors can I extract?",
       answer:
-        "No, your images remain completely private and are processed locally on your device without server uploads.",
+        "You can choose to extract 3, 5, 8, or 10 dominant colors depending on your design needs. By default, Colorvexa generates a 5-color dominant palette.",
+    },
+    {
+      question: "Can I get HEX codes from an image?",
+      answer:
+        "Yes, every extracted dominant color includes a 6-character hexadecimal code (e.g. #38BDF8) with a 1-click copy button, as well as a 'Copy All HEX' action.",
+    },
+    {
+      question: "Can I get RGB and HSL values?",
+      answer:
+        "Yes, Colorvexa displays full RGB (Red, Green, Blue) and HSL (Hue, Saturation, Lightness) color values alongside HEX for every extracted swatch.",
+    },
+    {
+      question: "Is my image uploaded?",
+      answer:
+        "No. All image processing and color analysis happen 100% locally in your web browser using HTML5 Canvas. Your image is never uploaded, saved, or transmitted to any server.",
+    },
+    {
+      question: "Does the tool work on mobile?",
+      answer:
+        "Yes, the Dominant Color Extractor is fully optimized for smartphones, tablets, and desktop computers.",
+    },
+    {
+      question: "Which image formats are supported?",
+      answer:
+        "The tool supports JPG/JPEG, PNG, WebP, SVG, and GIF image files up to 20MB in size.",
     },
   ];
 
@@ -83,8 +106,23 @@ export default function DominantColorExtractorPage() {
       icon: RefreshCw,
       iconBgColor: "bg-amber-50 text-amber-600 border-amber-200",
     },
+    {
+      title: "Shades & Tints Generator",
+      description: "Create step-by-step lighter and darker variations of any base color.",
+      href: "/tools/color-shades-generator",
+      icon: SlidersHorizontal,
+      iconBgColor: "bg-emerald-50 text-emerald-600 border-emerald-200",
+    },
+    {
+      title: "Color Contrast Checker",
+      description: "Verify text readability and check WCAG 2.1 accessibility compliance.",
+      href: "/tools/color-contrast-checker",
+      icon: Eye,
+      iconBgColor: "bg-purple-50 text-purple-600 border-purple-200",
+    },
   ];
 
+  // Structured Data (JSON-LD)
   const webAppSchema = {
     "@context": "https://schema.org",
     "@type": "WebApplication",
@@ -99,7 +137,7 @@ export default function DominantColorExtractorPage() {
       priceCurrency: "USD",
     },
     description:
-      "Free online dominant color extractor tool. Find primary color distribution ratios from images directly in your browser.",
+      "Free online dominant color extractor tool. Find primary color distributions and prominence ratios from images directly in your browser with zero server uploads.",
   };
 
   const faqSchema = {
@@ -157,47 +195,155 @@ export default function DominantColorExtractorPage() {
 
       <ToolPageLayout
         title="Dominant Color Extractor"
-        description="Extract the most prominent and dominant colors from any image instantly in your browser."
+        description="Extract the most prominent colors and percentage ratios from any image instantly in your web browser. Free, accurate, and 100% private client-side processing."
         icon={<Layers className="w-8 h-8 text-indigo-600" />}
         breadcrumbs={[
           { label: "Tools", href: "/#tools" },
           { label: "Dominant Color Extractor" },
         ]}
       >
-        <div className="space-y-12">
-          <div className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-10 shadow-xs space-y-8">
-            <div className="max-w-3xl mx-auto">
-              <ImageUploader />
-            </div>
-
-            <EmptyState
-              title="Upload an image to extract dominant colors"
-              description="Select an image above to automatically compute color frequency clusters and dominant swatches."
-            />
-
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-6 border-t border-slate-100 text-xs text-slate-600 font-medium">
-              <div className="flex items-center gap-2 p-3 bg-slate-50 rounded-xl">
-                <Sparkles className="w-4 h-4 text-indigo-500 shrink-0" />
-                <span>Smart color frequency clustering</span>
-              </div>
-              <div className="flex items-center gap-2 p-3 bg-slate-50 rounded-xl">
-                <ShieldCheck className="w-4 h-4 text-emerald-500 shrink-0" />
-                <span>Zero server upload or data storage</span>
-              </div>
-              <div className="flex items-center gap-2 p-3 bg-slate-50 rounded-xl">
-                <Zap className="w-4 h-4 text-amber-500 shrink-0" />
-                <span>High-speed browser processing</span>
-              </div>
-            </div>
+        <div className="space-y-16">
+          {/* Main Interactive Tool Container */}
+          <div className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-10 shadow-xs">
+            <DominantColorExtractor />
           </div>
+
+          {/* GEO CONTENT SECTION 1: What is a Dominant Color Extractor? */}
+          <section className="bg-white rounded-3xl border border-slate-200 p-8 sm:p-10 shadow-xs space-y-4">
+            <h2 className="text-2xl font-bold text-slate-900 tracking-tight">
+              What is a Dominant Color Extractor?
+            </h2>
+            <p className="text-slate-600 leading-relaxed text-sm sm:text-base">
+              A <strong>dominant color extractor</strong> is an online utility that analyzes an image to discover its primary, secondary, and accent colors. Instead of picking individual pixels manually, an <strong>image color extractor</strong> automatically scans pixel clusters across the photo to identify which colors occupy the largest surface area. This makes it effortless to <strong>extract dominant colors from an image</strong> for branding, UI theme design, or photography analysis.
+            </p>
+          </section>
+
+          {/* GEO CONTENT SECTION 2: How to Extract Dominant Colors From an Image */}
+          <section className="bg-white rounded-3xl border border-slate-200 p-8 sm:p-10 shadow-xs space-y-6">
+            <h2 className="text-2xl font-bold text-slate-900 tracking-tight">
+              How to Extract Dominant Colors From an Image
+            </h2>
+            <p className="text-slate-600 text-sm sm:text-base">
+              Follow these simple steps to <strong>extract colors from photo</strong> files instantly on mobile or desktop:
+            </p>
+            <ol className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 list-none p-0">
+              <li className="p-5 bg-slate-50 border border-slate-200 rounded-2xl flex gap-4 items-start">
+                <span className="w-8 h-8 rounded-xl bg-indigo-100 text-indigo-700 font-bold flex items-center justify-center shrink-0">
+                  1
+                </span>
+                <div>
+                  <h3 className="font-bold text-slate-900 text-base">Upload an image</h3>
+                  <p className="text-xs sm:text-sm text-slate-600 mt-1">
+                    Select or drag and drop a JPG, PNG, or WebP photo into the extractor zone.
+                  </p>
+                </div>
+              </li>
+
+              <li className="p-5 bg-slate-50 border border-slate-200 rounded-2xl flex gap-4 items-start">
+                <span className="w-8 h-8 rounded-xl bg-indigo-100 text-indigo-700 font-bold flex items-center justify-center shrink-0">
+                  2
+                </span>
+                <div>
+                  <h3 className="font-bold text-slate-900 text-base">Colorvexa analyzes pixels</h3>
+                  <p className="text-xs sm:text-sm text-slate-600 mt-1">
+                    Your browser computes pixel distributions locally without uploading your image to external servers.
+                  </p>
+                </div>
+              </li>
+
+              <li className="p-5 bg-slate-50 border border-slate-200 rounded-2xl flex gap-4 items-start">
+                <span className="w-8 h-8 rounded-xl bg-indigo-100 text-indigo-700 font-bold flex items-center justify-center shrink-0">
+                  3
+                </span>
+                <div>
+                  <h3 className="font-bold text-slate-900 text-base">Similar colors are grouped</h3>
+                  <p className="text-xs sm:text-sm text-slate-600 mt-1">
+                    Smart color quantization (Median Cut) groups neighboring pixel shades into clean representative clusters.
+                  </p>
+                </div>
+              </li>
+
+              <li className="p-5 bg-slate-50 border border-slate-200 rounded-2xl flex gap-4 items-start">
+                <span className="w-8 h-8 rounded-xl bg-indigo-100 text-indigo-700 font-bold flex items-center justify-center shrink-0">
+                  4
+                </span>
+                <div>
+                  <h3 className="font-bold text-slate-900 text-base">Prominent colors are displayed</h3>
+                  <p className="text-xs sm:text-sm text-slate-600 mt-1">
+                    The strongest colors appear ranked by percentage frequency ratio (e.g. 35.2%).
+                  </p>
+                </div>
+              </li>
+
+              <li className="p-5 bg-slate-50 border border-slate-200 rounded-2xl flex gap-4 items-start">
+                <span className="w-8 h-8 rounded-xl bg-indigo-100 text-indigo-700 font-bold flex items-center justify-center shrink-0">
+                  5
+                </span>
+                <div>
+                  <h3 className="font-bold text-slate-900 text-base">Copy values or export PNG</h3>
+                  <p className="text-xs sm:text-sm text-slate-600 mt-1">
+                    Copy HEX, RGB, or HSL values with one click, or export the full palette card as a PNG image.
+                  </p>
+                </div>
+              </li>
+            </ol>
+          </section>
+
+          {/* GEO CONTENT SECTION 3: How Does Color Extraction Work? */}
+          <section className="bg-white rounded-3xl border border-slate-200 p-8 sm:p-10 shadow-xs space-y-4">
+            <h2 className="text-2xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
+              <Sparkles className="w-6 h-6 text-indigo-600" />
+              How Does Color Extraction Work?
+            </h2>
+            <p className="text-slate-600 leading-relaxed text-sm sm:text-base">
+              Color extraction relies on a combination of <strong>pixel sampling</strong>, <strong>transparent pixel filtering</strong>, and <strong>color quantization algorithms</strong>:
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
+              <div className="p-5 bg-slate-50 border border-slate-200 rounded-2xl space-y-2">
+                <h3 className="font-bold text-slate-900 text-base text-indigo-700">1. Pixel Downsampling</h3>
+                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                  To ensure ultra-fast processing even for 4K images, the image is rendered onto an offscreen canvas at an optimized sample size, maintaining accurate color representation without browser lag.
+                </p>
+              </div>
+
+              <div className="p-5 bg-slate-50 border border-slate-200 rounded-2xl space-y-2">
+                <h3 className="font-bold text-slate-900 text-base text-indigo-700">2. Median Cut Clustering</h3>
+                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                  Pixels are split into 3D color boxes along the RGB axis with the greatest variance. The median point of each box forms a representative cluster centroid.
+                </p>
+              </div>
+
+              <div className="p-5 bg-slate-50 border border-slate-200 rounded-2xl space-y-2">
+                <h3 className="font-bold text-slate-900 text-base text-indigo-700">3. Frequency Ranking</h3>
+                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                  Each color cluster is ranked by the total percentage of image pixels it accounts for, giving you an exact mathematical overview of the <strong>dominant colors from image</strong> files.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          {/* GEO CONTENT SECTION 4: Is My Image Uploaded? */}
+          <section className="bg-slate-900 text-white rounded-3xl p-8 sm:p-10 shadow-lg space-y-4 relative overflow-hidden">
+            <div className="flex items-center gap-3">
+              <div className="p-2.5 bg-slate-800 rounded-xl text-emerald-400 border border-slate-700">
+                <Lock className="w-6 h-6" />
+              </div>
+              <h2 className="text-2xl font-bold tracking-tight">
+                Is My Image Uploaded?
+              </h2>
+            </div>
+            <p className="text-slate-300 leading-relaxed text-sm sm:text-base">
+              <strong>No, your image is processed 100% locally in your web browser.</strong> Colorvexa uses HTML5 Canvas and client-side JavaScript execution. Your photos never leave your device, ensuring maximum speed, zero bandwidth usage, and complete personal privacy.
+            </p>
+          </section>
 
           {/* INTERNAL LINKING SECTION */}
           <section className="bg-white rounded-3xl border border-slate-200 p-8 sm:p-10 shadow-xs space-y-4">
             <h2 className="text-xl font-bold text-slate-900">
-              Related Design & Color Utilities
+              Explore More Free Color Tools on Colorvexa
             </h2>
             <p className="text-slate-600 text-sm leading-relaxed">
-              Explore more free browser utilities on Colorvexa:
+              Supercharge your creative design workflow with our full suite of free browser utilities:
             </p>
             <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 text-xs sm:text-sm font-medium text-slate-700">
               <li>
@@ -248,6 +394,7 @@ export default function DominantColorExtractorPage() {
             </ul>
           </section>
 
+          {/* FAQ SECTION */}
           <FAQ items={faqs} title="Dominant Color Extractor FAQ" />
 
           {/* RELATED COLOR TOOLS SECTION */}
@@ -256,6 +403,9 @@ export default function DominantColorExtractorPage() {
               <h2 className="text-2xl font-bold text-slate-900 tracking-tight">
                 Related Color Tools
               </h2>
+              <p className="text-sm text-slate-600 mt-1">
+                Discover other client-side color utilities on Colorvexa.
+              </p>
             </div>
             <ToolGrid columns={3}>
               {relatedTools.map((tool, idx) => (
