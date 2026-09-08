@@ -35,7 +35,7 @@ export default function PrivacyPage() {
             <p className="text-xs text-slate-500 font-mono">Last updated: September 2024</p>
 
             <p>
-              At <strong>Colorvexa</strong>, accessible from https://colorvexa.com, one of our main priorities is the privacy of our visitors.
+              At <strong>Colorvexa</strong>, accessible from https://colorvexa.vercel.app, one of our main priorities is the privacy of our visitors.
             </p>
 
             <h2 className="text-xl font-bold text-slate-900 pt-4">Client-Side Local Image Processing</h2>

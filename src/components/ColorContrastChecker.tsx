@@ -180,7 +180,7 @@ export function ColorContrastChecker() {
       `- Large Text (AAA):  ${wcag.largeAAA ? "PASS (>= 4.5:1)" : "FAIL (< 4.5:1)"}`,
       `- UI Components:     ${wcag.uiComponent ? "PASS (>= 3.0:1)" : "FAIL (< 3.0:1)"}`,
       `==================================`,
-      `Generated at https://colorvexa.com/tools/color-contrast-checker`,
+      `Generated at https://colorvexa.vercel.app/tools/color-contrast-checker`,
     ].join("\n");
 
     navigator.clipboard.writeText(report);

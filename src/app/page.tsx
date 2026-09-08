@@ -257,7 +257,7 @@ export default function HomePage() {
         </section>
 
         {/* FEATURED TOOLS SECTION */}
-        <section className="py-16 lg:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section id="tools" className="py-16 lg:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-12 space-y-2">
             <span className="text-xs font-bold text-sky-600 uppercase tracking-wider">
               Essential Platform
