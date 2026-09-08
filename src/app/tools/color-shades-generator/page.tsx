@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ToolPageLayout } from "@/components/ToolPageLayout";
+import { ColorShadesGenerator } from "@/components/ColorShadesGenerator";
 import { FAQ } from "@/components/FAQ";
 import { ToolCard } from "@/components/ToolCard";
 import { ToolGrid } from "@/components/ToolGrid";
@@ -12,49 +13,96 @@ import {
   Palette,
   RefreshCw,
   Eye,
+  Lock,
 } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Shades & Tints Generator — Generate Color Variations | Colorvexa",
+  title: "Color Shades & Tints Generator – Create Color Variations | Colorvexa",
   description:
-    "Generate lighter tints and darker shades for any color code. Create clean step-by-step color scales for UI design directly in your browser.",
+    "Free online color shades and tints generator. Generate lighter tints and darker shades of any HEX, RGB, or HSL base color with copy and export features.",
   alternates: {
     canonical: getAbsoluteUrl("/tools/color-shades-generator"),
   },
   openGraph: {
-    title: "Shades & Tints Generator — Generate Color Variations | Colorvexa",
+    title: "Color Shades & Tints Generator – Create Color Variations | Colorvexa",
     description:
-      "Generate step-by-step lighter tints and darker shades for any HEX color code instantly.",
+      "Generate beautiful lighter tints and darker shades from any base color with instant copy and export capabilities.",
     url: getAbsoluteUrl("/tools/color-shades-generator"),
     siteName: SITE_NAME,
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Shades & Tints Generator — Generate Color Variations | Colorvexa",
+    title: "Color Shades & Tints Generator – Create Color Variations | Colorvexa",
     description:
-      "Create clean step-by-step lighter and darker color variations for UI design.",
+      "Generate color variations, shades, and tints instantly in your browser with 100% privacy.",
   },
 };
 
 export default function ColorShadesGeneratorPage() {
   const faqs = [
     {
-      question: "What is the difference between shades and tints?",
+      question: "What is a shade of a color?",
       answer:
-        "A tint is created by adding white to a base color to make it lighter, while a shade is created by adding black to a base color to make it darker.",
+        "A shade is created by mixing a base color with pure black (#000000). Increasing the percentage of black reduces lightness, producing a darker version of the original hue.",
     },
     {
-      question: "How are shades and tints used in UI design?",
+      question: "What is a tint of a color?",
       answer:
-        "Shades and tints help designers construct consistent design tokens for hover states, active states, backgrounds, borders, and disabled buttons.",
+        "A tint is created by mixing a base color with pure white (#FFFFFF). Increasing the percentage of white raises lightness, producing a lighter version of the original hue.",
+    },
+    {
+      question: "How do I make lighter versions of a color?",
+      answer:
+        "To create lighter versions (tints) of any color, enter your base HEX, RGB, or HSL code into Colorvexa. The tool automatically generates progressive tints by linearly blending your base color toward white.",
+    },
+    {
+      question: "How do I make darker versions of a color?",
+      answer:
+        "To create darker versions (shades) of a color, select or enter your base color. Colorvexa calculates progressive shades by blending the base color toward black.",
+    },
+    {
+      question: "Can I get HEX codes for shades and tints?",
+      answer:
+        "Yes! Every generated tint and shade swatch displays its exact HEX, RGB, and HSL codes, with 1-click copy buttons for instant copying.",
+    },
+    {
+      question: "Can I copy the generated colors?",
+      answer:
+        "Yes. You can copy individual color values, use 'Copy All Colors' for a list of HEX codes, copy CSS custom properties, copy JSON, or download the entire scale as a PNG palette image.",
+    },
+    {
+      question: "Does the tool work on mobile?",
+      answer:
+        "Yes, Colorvexa is fully responsive on mobile devices including Android smartphones, iPhones, iPads, tablets, and desktop browsers.",
     },
   ];
 
   const relatedTools = [
     {
+      title: "Image Color Picker",
+      description: "Pick exact pixel colors from any uploaded image with pixel-level precision.",
+      href: "/tools/image-color-picker",
+      icon: Pipette,
+      iconBgColor: "bg-sky-50 text-sky-600 border-sky-200",
+    },
+    {
+      title: "Dominant Color Extractor",
+      description: "Extract prominent dominant colors and palette ratios from any image.",
+      href: "/tools/dominant-color-extractor",
+      icon: Layers,
+      iconBgColor: "bg-indigo-50 text-indigo-600 border-indigo-200",
+    },
+    {
+      title: "Image Color Palette Generator",
+      description: "Automatically generate cohesive color palettes from uploaded images.",
+      href: "/tools/image-color-palette-generator",
+      icon: Palette,
+      iconBgColor: "bg-rose-50 text-rose-600 border-rose-200",
+    },
+    {
       title: "Color Converter",
-      description: "Convert seamlessly between HEX, RGB, and HSL color representations with copy features.",
+      description: "Convert seamlessly between HEX, RGB, and HSL color representations.",
       href: "/tools/color-converter",
       icon: RefreshCw,
       iconBgColor: "bg-amber-50 text-amber-600 border-amber-200",
@@ -66,19 +114,12 @@ export default function ColorShadesGeneratorPage() {
       icon: Eye,
       iconBgColor: "bg-purple-50 text-purple-600 border-purple-200",
     },
-    {
-      title: "Image Color Palette Generator",
-      description: "Automatically generate cohesive color palettes from uploaded images.",
-      href: "/tools/image-color-palette-generator",
-      icon: Palette,
-      iconBgColor: "bg-rose-50 text-rose-600 border-rose-200",
-    },
   ];
 
   const webAppSchema = {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    name: "Shades & Tints Generator",
+    name: "Color Shades & Tints Generator",
     url: getAbsoluteUrl("/tools/color-shades-generator"),
     applicationCategory: "DesignApplication",
     operatingSystem: "All",
@@ -89,7 +130,7 @@ export default function ColorShadesGeneratorPage() {
       priceCurrency: "USD",
     },
     description:
-      "Free online shades and tints generator. Create step-by-step color scales and lighter/darker variations in your web browser.",
+      "Free online color shades and tints generator. Generate lighter tints and darker shades of any base color in your browser with 100% privacy.",
   };
 
   const faqSchema = {
@@ -124,7 +165,7 @@ export default function ColorShadesGeneratorPage() {
       {
         "@type": "ListItem",
         position: 3,
-        name: "Shades & Tints Generator",
+        name: "Color Shades & Tints Generator",
         item: getAbsoluteUrl("/tools/color-shades-generator"),
       },
     ],
@@ -146,66 +187,126 @@ export default function ColorShadesGeneratorPage() {
       />
 
       <ToolPageLayout
-        title="Shades & Tints Generator"
-        description="Generate lighter (tints) and darker (shades) step-by-step variations of any base color."
+        title="Color Shades & Tints Generator"
+        description="Generate precise lighter tints and darker shades from any base color with custom steps, CSS export, and instant browser calculation."
         icon={<SlidersHorizontal className="w-8 h-8 text-emerald-600" />}
         breadcrumbs={[
           { label: "Tools", href: "/#tools" },
-          { label: "Shades & Tints Generator" },
+          { label: "Color Shades & Tints Generator" },
         ]}
       >
-        <div className="space-y-12">
-          <div className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-10 shadow-xs space-y-8">
-            <div className="max-w-2xl mx-auto space-y-6">
-              <div className="flex flex-col sm:flex-row items-center gap-4 bg-slate-50 p-4 border border-slate-200 rounded-2xl">
-                <div className="w-16 h-16 rounded-xl bg-sky-500 shadow-inner border border-slate-300 shrink-0" />
-                <div className="w-full space-y-1">
-                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-700">
-                    Base Color HEX
-                  </label>
-                  <input
-                    type="text"
-                    defaultValue="#0ea5e9"
-                    className="w-full bg-white border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm font-mono font-bold text-slate-900 focus:outline-2 focus:outline-sky-600"
-                  />
-                </div>
-              </div>
+        <div className="space-y-16">
+          {/* Main Interactive Shades & Tints Generator */}
+          <ColorShadesGenerator />
 
-              {/* Scale Preview */}
-              <div className="space-y-4">
-                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500">
-                  Generated Tints & Shades Scale
-                </h3>
-                <div className="grid grid-cols-5 sm:grid-cols-10 gap-2">
-                  {[
-                    { name: "100%", bg: "bg-sky-100", hex: "#e0f2fe" },
-                    { name: "200%", bg: "bg-sky-200", hex: "#bae6fd" },
-                    { name: "300%", bg: "bg-sky-300", hex: "#7dd3fc" },
-                    { name: "400%", bg: "bg-sky-400", hex: "#38bdf8" },
-                    { name: "500%", bg: "bg-sky-500", hex: "#0ea5e9" },
-                    { name: "600%", bg: "bg-sky-600", hex: "#0284c7" },
-                    { name: "700%", bg: "bg-sky-700", hex: "#0369a1" },
-                    { name: "800%", bg: "bg-sky-800", hex: "#075985" },
-                    { name: "900%", bg: "bg-sky-900", hex: "#0c4a6e" },
-                    { name: "950%", bg: "bg-slate-950", hex: "#082f49" },
-                  ].map((item, idx) => (
-                    <div key={idx} className="flex flex-col gap-1 text-center">
-                      <div className={`h-12 rounded-lg border border-slate-200 ${item.bg}`} />
-                      <span className="text-[10px] font-mono text-slate-600 font-medium">{item.hex}</span>
-                    </div>
-                  ))}
-                </div>
+          {/* GEO CONTENT SECTION 1: What Are Color Shades? */}
+          <section className="bg-white rounded-3xl border border-slate-200 p-8 sm:p-10 shadow-xs space-y-4">
+            <h2 className="text-2xl font-bold text-slate-900 tracking-tight">
+              What Are Color Shades?
+            </h2>
+            <p className="text-slate-600 leading-relaxed text-sm sm:text-base">
+              A <strong>color shade</strong> is a darker variation of a base color created by progressively mixing it with <strong>black (#000000)</strong>. In design theory, adding black decreases the lightness of the color while retaining its fundamental hue angle. Shades are extensively used for text headers, hover states, border highlights, drop shadows, and dark mode UI themes.
+            </p>
+          </section>
+
+          {/* GEO CONTENT SECTION 2: What Are Color Tints? */}
+          <section className="bg-white rounded-3xl border border-slate-200 p-8 sm:p-10 shadow-xs space-y-4">
+            <h2 className="text-2xl font-bold text-slate-900 tracking-tight">
+              What Are Color Tints?
+            </h2>
+            <p className="text-slate-600 leading-relaxed text-sm sm:text-base">
+              A <strong>color tint</strong> is a lighter variation of a base color created by progressively mixing it with <strong>white (#FFFFFF)</strong>. Adding white increases lightness, producing soft pastels and gentle background highlights. Tints are essential in web design for subtle button backgrounds, active card states, form input highlights, and cohesive UI color scales.
+            </p>
+          </section>
+
+          {/* GEO CONTENT SECTION 3: How to Generate Shades and Tints */}
+          <section className="bg-white rounded-3xl border border-slate-200 p-8 sm:p-10 shadow-xs space-y-6">
+            <h2 className="text-2xl font-bold text-slate-900 tracking-tight">
+              How to Generate Shades and Tints
+            </h2>
+            <ol className="grid grid-cols-1 md:grid-cols-4 gap-4 list-none p-0">
+              <li className="p-5 bg-slate-50 border border-slate-200 rounded-2xl flex flex-col gap-2">
+                <span className="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-700 font-bold flex items-center justify-center">
+                  1
+                </span>
+                <h3 className="font-bold text-slate-900 text-sm sm:text-base">1. Select a Base Color</h3>
+                <p className="text-xs text-slate-600">
+                  Choose or paste a color code in HEX, RGB, or HSL format, or pick a color using the visual picker.
+                </p>
+              </li>
+
+              <li className="p-5 bg-slate-50 border border-slate-200 rounded-2xl flex flex-col gap-2">
+                <span className="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-700 font-bold flex items-center justify-center">
+                  2
+                </span>
+                <h3 className="font-bold text-slate-900 text-sm sm:text-base">2. Set Variations Count</h3>
+                <p className="text-xs text-slate-600">
+                  Select your desired step resolution (5, 7, 9, or 11 steps) to customize scale granularities.
+                </p>
+              </li>
+
+              <li className="p-5 bg-slate-50 border border-slate-200 rounded-2xl flex flex-col gap-2">
+                <span className="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-700 font-bold flex items-center justify-center">
+                  3
+                </span>
+                <h3 className="font-bold text-slate-900 text-sm sm:text-base">3. Review Generated Scale</h3>
+                <p className="text-xs text-slate-600">
+                  Colorvexa automatically computes mathematical tints and shades instantly in your browser.
+                </p>
+              </li>
+
+              <li className="p-5 bg-slate-50 border border-slate-200 rounded-2xl flex flex-col gap-2">
+                <span className="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-700 font-bold flex items-center justify-center">
+                  4
+                </span>
+                <h3 className="font-bold text-slate-900 text-sm sm:text-base">4. Copy or Export</h3>
+                <p className="text-xs text-slate-600">
+                  Copy individual color formats, copy CSS variables or JSON, or download the palette PNG image.
+                </p>
+              </li>
+            </ol>
+          </section>
+
+          {/* GEO CONTENT SECTION 4: How Are Shades and Tints Calculated? */}
+          <section className="bg-white rounded-3xl border border-slate-200 p-8 sm:p-10 shadow-xs space-y-4">
+            <h2 className="text-2xl font-bold text-slate-900 tracking-tight">
+              How Are Shades and Tints Calculated?
+            </h2>
+            <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
+              Colorvexa uses linear interpolation (RGB color mixing) to ensure smooth, predictable color transitions:
+            </p>
+            <ul className="space-y-3 text-xs sm:text-sm text-slate-700">
+              <li className="p-3.5 bg-slate-50 border border-slate-200 rounded-xl">
+                <strong className="text-slate-900">Tint Formula:</strong> For step factor <i>f</i> (0 to 1), each channel is calculated as: <code>R_tint = R + (255 - R) × f</code>. This linearly scales color intensity toward pure white.
+              </li>
+              <li className="p-3.5 bg-slate-50 border border-slate-200 rounded-xl">
+                <strong className="text-slate-900">Shade Formula:</strong> For step factor <i>f</i> (0 to 1), each channel is calculated as: <code>R_shade = R × (1 - f)</code>. This linearly scales channel values down toward pure black.
+              </li>
+            </ul>
+          </section>
+
+          {/* PRIVACY NOTICE SECTION */}
+          <section className="bg-slate-900 text-white rounded-3xl p-8 sm:p-10 shadow-lg space-y-4 relative overflow-hidden">
+            <div className="flex items-center gap-3">
+              <div className="p-2.5 bg-slate-800 rounded-xl text-emerald-400 border border-slate-700">
+                <Lock className="w-6 h-6" />
               </div>
+              <h2 className="text-2xl font-bold tracking-tight">
+                Private Client-Side Processing
+              </h2>
             </div>
-          </div>
+            <p className="text-slate-300 leading-relaxed text-sm sm:text-base">
+              All calculations run 100% locally in your web browser. No color codes or data are sent to external servers or remote tracking systems.
+            </p>
+          </section>
 
           {/* INTERNAL LINKING SECTION */}
           <section className="bg-white rounded-3xl border border-slate-200 p-8 sm:p-10 shadow-xs space-y-4">
             <h2 className="text-xl font-bold text-slate-900">
-              Related Design & Color Utilities
+              Explore Related Color Tools on Colorvexa
             </h2>
             <p className="text-slate-600 text-sm leading-relaxed">
-              Explore more free browser utilities on Colorvexa:
+              Enhance your design workflow with our suite of free online color tools:
             </p>
             <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 text-xs sm:text-sm font-medium text-slate-700">
               <li>
@@ -223,7 +324,7 @@ export default function ColorShadesGeneratorPage() {
                   className="p-3 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-xl flex items-center gap-2 text-sky-700 hover:text-sky-800 transition-colors"
                 >
                   <Layers className="w-4 h-4 shrink-0 text-indigo-600" />
-                  <span>Extract Dominant Colors</span>
+                  <span>Dominant Color Extractor</span>
                 </Link>
               </li>
               <li>
@@ -232,7 +333,7 @@ export default function ColorShadesGeneratorPage() {
                   className="p-3 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-xl flex items-center gap-2 text-sky-700 hover:text-sky-800 transition-colors"
                 >
                   <Palette className="w-4 h-4 shrink-0 text-rose-600" />
-                  <span>Image Palette Generator</span>
+                  <span>Image Color Palette Generator</span>
                 </Link>
               </li>
               <li>
@@ -241,7 +342,7 @@ export default function ColorShadesGeneratorPage() {
                   className="p-3 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-xl flex items-center gap-2 text-sky-700 hover:text-sky-800 transition-colors"
                 >
                   <RefreshCw className="w-4 h-4 shrink-0 text-amber-600" />
-                  <span>Color Code Converter</span>
+                  <span>Color Converter</span>
                 </Link>
               </li>
               <li>
@@ -256,7 +357,8 @@ export default function ColorShadesGeneratorPage() {
             </ul>
           </section>
 
-          <FAQ items={faqs} title="Shades & Tints FAQ" />
+          {/* GEO FAQ SECTION */}
+          <FAQ items={faqs} title="Color Shades & Tints FAQ" />
 
           {/* RELATED COLOR TOOLS SECTION */}
           <section className="space-y-6">
@@ -264,6 +366,9 @@ export default function ColorShadesGeneratorPage() {
               <h2 className="text-2xl font-bold text-slate-900 tracking-tight">
                 Related Color Tools
               </h2>
+              <p className="text-sm text-slate-600 mt-1">
+                Discover more client-side color utilities on Colorvexa.
+              </p>
             </div>
             <ToolGrid columns={3}>
               {relatedTools.map((tool, idx) => (
