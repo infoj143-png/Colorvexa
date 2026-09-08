@@ -316,7 +316,7 @@ export default function DominantColorExtractorPage() {
               <div className="p-5 bg-slate-50 border border-slate-200 rounded-2xl space-y-2">
                 <h3 className="font-bold text-slate-900 text-base text-indigo-700">3. Frequency Ranking</h3>
                 <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                  Each color cluster is ranked by the total percentage of image pixels it accounts for, giving you an exact mathematical overview of the <strong>dominant colors from image</strong> files.
+                  Each color cluster is ranked by the total percentage of image pixels it accounts for, giving you an estimated color distribution calculated from sampled image data for the <strong>dominant colors from image</strong> files.
                 </p>
               </div>
             </div>

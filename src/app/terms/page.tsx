@@ -36,7 +36,7 @@ export default function TermsPage() {
 
             <h2 className="text-xl font-bold text-slate-900 pt-2">1. Agreement to Terms</h2>
             <p>
-              By accessing and using Colorvexa (https://colorvexa.com), you agree to be bound by these Terms of Use and all applicable laws and regulations.
+              By accessing and using Colorvexa (https://colorvexa.vercel.app), you agree to be bound by these Terms of Use and all applicable laws and regulations.
             </p>
 
             <h2 className="text-xl font-bold text-slate-900 pt-2">2. Free Online Service</h2>

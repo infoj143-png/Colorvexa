@@ -119,7 +119,7 @@ export function exportPaletteAsPng(
   // Footer branding
   ctx.fillStyle = "#64748B"; // Slate 500
   ctx.font = "16px system-ui, -apple-system, sans-serif";
-  ctx.fillText("Generated with colorvexa.com • 100% Client-Side Privacy", 40, height - 25);
+  ctx.fillText("Generated with Colorvexa • 100% Client-Side Privacy", 40, height - 25);
 
   // Trigger file download
   const link = document.createElement("a");
@@ -211,7 +211,7 @@ export function exportShadesAndTintsAsPng(
   // Footer branding
   ctx.fillStyle = "#64748B"; // Slate 500
   ctx.font = "16px system-ui, -apple-system, sans-serif";
-  ctx.fillText("Generated with colorvexa.com • 100% Client-Side Privacy", 40, height - 25);
+  ctx.fillText("Generated with Colorvexa • 100% Client-Side Privacy", 40, height - 25);
 
   // Trigger file download
   const link = document.createElement("a");

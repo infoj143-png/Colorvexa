@@ -1,5 +1,5 @@
 export const SITE_NAME = "Colorvexa";
-export const DEFAULT_SITE_URL = "https://colorvexa.com";
+export const DEFAULT_SITE_URL = "https://colorvexa.vercel.app";
 
 export const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || DEFAULT_SITE_URL;
